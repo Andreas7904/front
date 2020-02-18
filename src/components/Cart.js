@@ -1,12 +1,13 @@
 import React, { useContext, useState } from 'react';
 import { CartContext } from './CartContext';
 import '../App.css'
+import Axios from 'axios';
 
 
 export const Cart = (props) => {
     const [cart, setCart] = useContext(CartContext);
     const totalPrice = cart.reduce((acc, curr) => acc + curr.price, 0);
-    const [order, setOrder] = useState ([])
+    const [order, setOrder] = useState([])
 
     const cancelOrderHandler = () => {
         alert('You clicked on cancel')
@@ -18,9 +19,22 @@ export const Cart = (props) => {
             price: totalPrice,
             items: cart,
         }])
+    };
+    console.log(totalPrice)
 
-    }
-    console.log(order)
+    const sendOrder = () => {
+        Axios.post("http://localhost:5000/Burger/", {
+            // ingredients: "cheese",
+            // product: "Burger",
+            // price:3
+            Price: totalPrice,
+            Burger: "Burger",
+            BorngDetails:""
+
+        }).then(function (response) {
+            console.log(response);
+        })
+    };
     return (
         <div className='Cart'>
             <span>items in cart : {cart.length}</span>
@@ -28,6 +42,7 @@ export const Cart = (props) => {
             <span>total price : {totalPrice}</span> <br />
             <button onClick={cancelOrderHandler}>Cancel</button>
             <button onClick={OrderHandler}>Order</button>
+            <button onClick={sendOrder}>send order</button>
         </div>
     )
 }
