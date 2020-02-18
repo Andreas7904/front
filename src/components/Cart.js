@@ -24,9 +24,6 @@ export const Cart = (props) => {
 
     const sendOrder = () => {
         Axios.post("http://localhost:5000/Burger/", {
-            // ingredients: "cheese",
-            // product: "Burger",
-            // price:3
             Price: totalPrice,
             Burger: "Burger",
             BorngDetails:""
